@@ -148,6 +148,14 @@ func (c *Context) String(code int, s string) (err error) {
 	return
 }
 
+// octet-stream ~ use flatbuffer
+func (c *Context) OCTET(code int, b []byte) (err error) {
+	c.response.Header().Set(ContentType, ApplicationOctet)
+	c.response.WriteHeader(code)
+	c.response.Write(b)
+	return
+}
+
 // JSON sends a JSON response with status code.
 func (c *Context) JSON(code int, i interface{}) (err error) {
 	b, err := json.Marshal(i)
